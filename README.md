@@ -1,100 +1,142 @@
-# streaming-03-rabbitmq
+# streaming-02-multiple-processes
 
- Naiema Elsaadi
- Date: August 30, 2023
+> Multiple processes accessing a shared resource concurrently
 
-Get started with RabbitMQ, a message broker, that enables multiple processes to communicate reliably through an intermediary
+## Overview
 
-## Before You Begin
+This example starts a shared database and multiple processes.
 
-1. Fork this starter repo into your GitHub.
-1. Clone your repo down to your machine.
-1. In VS Code with Python extension, click on emit_message_v1.py to get VS Code in Python mode.
-1. View / Command Palette - then Python: Select Interpreter
-1. Select your conda environment. See the references below for more.
-1. Use the terminal to install pika into your active environment. 
+The processes represent multiple users, or locations, or programs 
+hitting a shared database at the same time. 
 
-`conda install -c conda-forge pika`
+## Prerequisites
 
-## Read
+1. Git
+1. Python 3.7+ (3.11+ preferred)
+1. VS Code Editor
+1. VS Code Extension: Python (by Microsoft)
 
-1. Read the [RabbitMQ Tutorial - Hello, World!](https://www.rabbitmq.com/tutorials/tutorial-one-python.html)
-1. Read the code and comments in this repo.
+## Task 1. Fork 
 
-## Execute about,py
+Fork this repository ("repo") into **your** GitHub account. 
 
-1. Run about.py.
-1. Read about.txt. 
-1. Verfiy you have exactly one active, one None env.
+## Task 2. Clone
 
-## Version 1 - Execute the Producer/Sender
+Clone **your** new GitHub repo down to the Documents folder on your local machine. 
 
-1. Read v1_emit_message.py (and the tutorial)
-1. Run the file. 
+## Task 3. Explore
 
-You'll need to fix an error in the program to get it to run.
-Once it runs and finishes, we can reuse the terminal.
+Explore your new project repo in VS Code on your local machine.
 
-## Version 1 - Execute the Consumer/Listener
+## Task 4. Execute Check Script
 
-1. Read v1_listen_for_messages.py (and the tutorial)
-1. Run the file.
+Execute 00_check_core.py to generate useful information.
 
-You'll need to fix an error in the program to get it to run.
-Once it runs successfully, will it terminate on its own? How do you know? 
-As long as the process is running, we cannot use this terminal for other commands. 
+## Task 5. Execute Multiple Processes Project Script
 
-## Version 1 - Open a New Terminal / Emit More Messages
+Execute multiple_processes.py.
 
-1. Open a new terminal window.
-1. Use this new window to emit more messages
-1. In v1_emit_message.py, modify the message. 
-1. Execute the script. 
-1. Watch what happens in the listening window.
-1. Do this several times to emit at least 3 different messages.
+Read the output. Read the code. 
+Try to figure out what's going on. 
 
-## Version 1: Don't Repeat Yourself (DRY)
+1. What libraries did we import?
+1. Where do we set the TASK_DURATION_SECONDS?
+1. How many functions are defined? 
+1. What are the function names? 
+1. In general, what does each function do? 
+1. Where does the execution begin? Hint: generally at the end of the file.
+1. How many processes do we start?
+1. How many records does each process insert?
 
-1. Did you notice you had to change the message in two places?
-    1. You update the actual message sent. 
-    1. You also update what is displayed to the user. 
-1. Fix this by introducting a variable to hold the message. 
-    1. Use your variable when sending. 
-    1. Use the variable again when displaying to the user. 
+In this first run, we start 3 processes, 
+each inserting 2 records into a shared database 
+(for a total of 6 records inserted.)
 
-To send a new message, you'll only make one change.
-Updating and improving code is called 'refactoring'. 
-Use your skills to keep coding enjoyable. 
+In each case, the process gets a connection to the database, 
+and a cursor to execute SQL statements.
+It inserts a record, and exits the database quickly.
 
-## Version 2
+In general, we're successful and six new records get inserted. 
 
-Now look at the second version of each file.
-These include more graceful error handling,
-and a consistent, reusable approach to building code.
+## Task 6. Execute Multiple Processes Script with Longer Tasks
 
-Each of the version 2 programs include an error as well. 
+For the second run, modify the task duration to make each task take 3 seconds. 
+Hint: Look for the TODO.
+Run the script again. 
+With the longer tasks, we now get into trouble - 
+one process will have the database open and be working on it - 
+then when another process tries to do the same, it can't and 
+we end up with errors. 
 
-1. Find the error and fix it. 
-1. Compare the structure of the version 2 files. 
-1. Modify the docstrings on all your files.
-1. Include your name and the date.
-1. Imports always go at the top, just after the file docstring.
-1. Imports should be one per line - why?
-1. Then, define your functions.
-1. Functions are reuable logic blocks.
-1. Everything the function needs comes in through the arguments.
-1. A function may - or may not - return a value. 
-1. When we open a connection, we should close the connection. 
-1. Which of the 4 files will always close() the connection?
-1. Search GitHub for if __name__ == "__main__":
-1. How many hits did you get? 
-1. Learn and understand this common Python idiom.
+## Task 7. Document Results After Each Run
 
-## Reference
+To clear the terminal, in the terminal window, type clear and hit enter or return. 
 
-- [RabbitMQ Tutorial - Hello, World!](https://www.rabbitmq.com/tutorials/tutorial-one-python.html)
-- [Using Python environments in VS Code](https://code.visualstudio.com/docs/python/environments)
+`clear`
 
-## Multiple Terminals
+To document results, clear the terminal, run the script, and paste all of the terminal contents into the output file.
 
-![Mac Example](Naiema.png)
+Use out0.txt to document the first run. 
+
+Use out3.txt to document the second run.
+
+
+-----
+
+## Helpful Information
+
+To get more help on the early tasks, see [streaming-01-getting-started](https://github.com/denisecase/streaming-01-getting-started).
+
+### Select All, Copy, Paste
+
+On Windows the select all, copy, paste hotkeys are:
+
+- CTRL a 
+- CTRL c 
+- CTRL v 
+
+On a Mac the select all, copy, paste hotkeys are:
+
+- Command a
+- Command c
+- Command v
+
+Detailed copy/paste instructions (as needed)
+
+1. To use these keys to transfer your output into a file, 
+clear the terminal, run the script, then click in the terminal to make it active.
+1. To select all terminal content, hold CTRL and the 'a' key together. 
+1. To copy the selected content, hold CTRL and the 'c' key together. 
+1. To paste, open the destination file (e.g. out0.py) for editing.
+1. Click somewhere in the destination file to make it the active window.
+1. Now hit CTRL a (both together) to select all of the destination file.
+1. Hit CTRL v (both together) to paste the content from your clipboard.
+
+Do a web search to find helpful videos on anything that seems confusing
+and share them in our discussion.
+
+### Reading Error Messages
+
+Python has pretty helpful error messages. 
+When you get an error, read them carefully. 
+
+- What error do you get?
+
+### Database Is Locked Error
+
+Do a web search on the sqlite3 'database is locked' error.
+
+- What do you learn?
+- Once a process fails, it crashes the main process and everything stops. 
+
+### Deadlock
+
+Deadlock is a special kind of locking issue where a process 
+is waiting on a resource or process, that is waiting also. 
+
+Rather than crashing, a system in deadlock may wait indefinitely, 
+with no process able to move forward and make progress.
+
+### Learn More
+
+Check out Wikipedia's article on deadlock and other sources to learn how to prevent and avoid locking issues in concurrent processes. 
